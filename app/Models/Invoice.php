@@ -40,6 +40,11 @@ class Invoice extends Model
         return $this->hasMany(Line::class, 'invoice_id');
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'invoice_id');
+    }
+
     public function payableTo()
     {
         return $this->belongsTo(Entity::class, 'payable_to');
@@ -93,6 +98,10 @@ class Invoice extends Model
     {
         // Sum up the total of all payments
         $total = 0;
+
+        foreach ($this->transactions as $transaction) {
+            $total += $transaction->amount;
+        }
 
         return $total;
     }

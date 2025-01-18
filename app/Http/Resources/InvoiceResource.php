@@ -30,6 +30,9 @@ class InvoiceResource extends JsonResource
             'currency' => $this->getCurrency(),
             'owed' => round($this->getOwed(), 2),
             'status' => $this->getStatus(),
+            'transactions' => TransactionResource::collection($this->transactions),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ModifierController;
 use App\Http\Controllers\Api\LineController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\EntityController;
+use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,7 +48,7 @@ Route::put('items/{id}', ItemController::class . '@update');
 Route::delete('items/{id}', ItemController::class . '@destroy');
 
 // ----- LINES ----- \\
-Route::get('lines', LineController::class . '@index');
+// Route::get('lines', LineController::class . '@index');
 
 Route::post('lines', LineController::class . '@store');
 
@@ -78,3 +79,14 @@ Route::get('entities/{id}', EntityController::class . '@show');
 Route::put('entities/{id}', EntityController::class . '@update');
 
 Route::delete('entities/{id}', EntityController::class . '@destroy');
+
+// ----- TRANSACTIONS ----- \\
+Route::get('transactions', TransactionController::class . '@index');
+
+Route::post('transactions', TransactionController::class . '@store');
+
+Route::get('transactions/{id}', TransactionController::class . '@show');
+
+Route::put('transactions/{id}', TransactionController::class . '@update');
+
+Route::delete('transactions/{id}', TransactionController::class . '@destroy');
