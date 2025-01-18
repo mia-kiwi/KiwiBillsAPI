@@ -19,9 +19,7 @@ class ModifierResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'value' => $this->value,
-            'is_percentage' => $this->is_percentage,
-            'literal_value' => $this->is_percentage ? abs(round($this->value, 2)) . '%' : abs(round($this->value, 2)),
-            'literal_sign' => $this->value > 0 ? '+' : '-',
+            'is_relative' => $this->is_relative,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

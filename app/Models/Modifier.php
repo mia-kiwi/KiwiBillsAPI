@@ -20,21 +20,20 @@ class Modifier extends Model
         'name',
         'description',
         'value',
-        'is_percentage',
+        'is_relative',
     ];
 
     protected $casts = [
-        'is_percentage' => 'boolean',
+        'is_relative' => 'boolean',
         'value' => 'float',
     ];
 
-    public function calculateModifier(float $base_price): float
+    public function getModifiedPrice(float $base_price)
     {
-        return $this->is_percentage ? $base_price * $this->value / 100 : $this->value;
-    }
+        if ($this->is_relative) {
+            return $base_price * $this->value;
+        }
 
-    public function getModifiedPrice(float $base_price): float
-    {
-        return $base_price + $this->calculateModifier($base_price);
+        return $base_price + $this->value;
     }
 }

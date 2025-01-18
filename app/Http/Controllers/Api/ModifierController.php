@@ -28,7 +28,7 @@ class ModifierController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'value' => 'required|decimal:0,2',
-            'is_percentage' => 'required|boolean',
+            'is_relative' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +40,7 @@ class ModifierController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'value' => $request->value,
-            'is_percentage' => $request->is_percentage,
+            'is_relative' => $request->is_relative,
         ]);
 
         return response()->json([
@@ -72,7 +72,7 @@ class ModifierController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'value' => 'required|decimal:0,2',
-            'is_percentage' => 'required|boolean',
+            'is_relative' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -83,7 +83,7 @@ class ModifierController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'value' => $request->value,
-            'is_percentage' => $request->is_percentage,
+            'is_relative' => $request->is_relative,
         ]);
 
         return response()->json([

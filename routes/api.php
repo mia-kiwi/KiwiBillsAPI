@@ -15,78 +15,22 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // ----- MODIFIERS ----- \\
-Route::get('modifiers', ModifierController::class . '@index');
-
-Route::post('modifiers', ModifierController::class . '@store');
-
-Route::get('modifiers/{id}', ModifierController::class . '@show');
-
-Route::put('modifiers/{id}', ModifierController::class . '@update');
-
-Route::delete('modifiers/{id}', ModifierController::class . '@destroy');
+Route::apiResource('modifiers', ModifierController::class);
 
 // ----- CURRENCIES ----- \\
-Route::get('currencies', CurrencyController::class . '@index');
-
-Route::post('currencies', CurrencyController::class . '@store');
-
-Route::get('currencies/{id}', CurrencyController::class . '@show');
-
-Route::put('currencies/{id}', CurrencyController::class . '@update');
-
-Route::delete('currencies/{id}', CurrencyController::class . '@destroy');
+Route::apiResource('currencies', CurrencyController::class);
 
 // ----- ITEMS ----- \\
-Route::get('items', ItemController::class . '@index');
-
-Route::post('items', ItemController::class . '@store');
-
-Route::get('items/{id}', ItemController::class . '@show');
-
-Route::put('items/{id}', ItemController::class . '@update');
-
-Route::delete('items/{id}', ItemController::class . '@destroy');
+Route::apiResource('items', ItemController::class);
 
 // ----- LINES ----- \\
-// Route::get('lines', LineController::class . '@index');
-
-Route::post('lines', LineController::class . '@store');
-
-Route::get('lines/{id}', LineController::class . '@show');
-
-Route::put('lines/{id}', LineController::class . '@update');
-
-Route::delete('lines/{id}', LineController::class . '@destroy');
+Route::apiResource('lines', LineController::class);
 
 // ----- INVOICES ----- \\
-Route::get('invoices', InvoiceController::class . '@index');
-
-Route::post('invoices', InvoiceController::class . '@store');
-
-Route::get('invoices/{id}', InvoiceController::class . '@show');
-
-Route::put('invoices/{id}', InvoiceController::class . '@update');
-
-Route::delete('invoices/{id}', InvoiceController::class . '@destroy');
+Route::apiResource('invoices', InvoiceController::class);
 
 // ----- ENTITIES ----- \\
-Route::get('entities', EntityController::class . '@index');
-
-Route::post('entities', EntityController::class . '@store');
-
-Route::get('entities/{id}', EntityController::class . '@show');
-
-Route::put('entities/{id}', EntityController::class . '@update');
-
-Route::delete('entities/{id}', EntityController::class . '@destroy');
+Route::apiResource('entities', EntityController::class);
 
 // ----- TRANSACTIONS ----- \\
-Route::get('transactions', TransactionController::class . '@index');
-
-Route::post('transactions', TransactionController::class . '@store');
-
-Route::get('transactions/{id}', TransactionController::class . '@show');
-
-Route::put('transactions/{id}', TransactionController::class . '@update');
-
-Route::delete('transactions/{id}', TransactionController::class . '@destroy');
+Route::apiResource('transactions', TransactionController::class);
