@@ -35,11 +35,11 @@ class Item extends Model
 
     public function getShortFormattedPrice(): string
     {
-        return $this->currency->getShortFormattedPrice($this->unit_price);
+        return $this->currency->getShortFormattedPrice(round($this->unit_price, 2));
     }
 
     public function getFormattedPrice(): string
     {
-        return $this->currency->getFormattedPrice($this->unit_price);
+        return $this->currency->getFormattedPrice(round($this->unit_price, 2));
     }
 }

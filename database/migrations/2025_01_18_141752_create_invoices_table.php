@@ -16,10 +16,17 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('info')->nullable();
             $table->string('reference')->nullable();
-            $table->dateTime('recieved_at')->nullable();
+            $table->dateTime('recieved_at')->nullable()->default(now());
             $table->dateTime('due_at')->nullable();
-            $table->foreignId('payable_to')->constrained('entities')->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('payable_by')->constrained('entities')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('issued_at')->nullable();
+            $table->string('issued_by')->nullable();
+            $table->string('payable_to')->nullable();
+            $table->string('payable_by')->nullable();
+
+            $table->foreign('issued_by')->references('id')->on('entities')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('payable_to')->references('id')->on('entities')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('payable_by')->references('id')->on('entities')->cascadeOnUpdate()->nullOnDelete();
+
             $table->timestamps();
         });
     }

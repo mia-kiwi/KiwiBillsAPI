@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ModifierResource extends JsonResource
+class EntityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +18,12 @@ class ModifierResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'value' => $this->value,
-            'is_percentage' => $this->is_percentage,
-            'literal_value' => $this->is_percentage ? abs(round($this->value, 2)) . '%' : abs(round($this->value, 2)),
-            'literal_sign' => $this->value > 0 ? '+' : '-',
+            'address' => $this->address,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'website' => $this->website,
+            'type' => $this->type,
+            'email_string' => $this->getEmailString(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
