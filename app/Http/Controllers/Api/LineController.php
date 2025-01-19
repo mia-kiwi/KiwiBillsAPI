@@ -81,27 +81,20 @@ class LineController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'index' => 'required|integer|min:0',
-            'description' => 'nullable|string',
-            'quantity' => 'required|integer|min:1',
-            'vat' => 'required|decimal:0,2',
-            'item_id' => 'required|exists:items,id',
-            'invoice_id' => 'required|exists:invoices,id',
-            'modifier_ids' => 'array|nullable|exists:modifiers,id',
+            'index' => 'sometimes|required|integer|min:0',
+            'description' => 'sometimes|nullable|string',
+            'quantity' => 'sometimes|required|integer|min:1',
+            'vat' => 'sometimes|required|decimal:0,2',
+            'item_id' => 'sometimes|required|exists:items,id',
+            'invoice_id' => 'sometimes|required|exists:invoices,id',
+            'modifier_ids' => 'sometimes|array|nullable|exists:modifiers,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $line->update([
-            'index' => $request->index,
-            'description' => $request->description,
-            'quantity' => $request->quantity,
-            'vat' => $request->vat,
-            'item_id' => $request->item_id,
-            'invoice_id' => $request->invoice_id,
-        ]);
+        $line->update($request->all());
 
         // Sync the modifiers to the line
         try {

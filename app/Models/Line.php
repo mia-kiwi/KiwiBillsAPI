@@ -48,14 +48,14 @@ class Line extends Model
     public function getLineTotal()
     {
         // Get the total without modifiers
-        $total = $this->item->unit_price * $this->quantity;
+        $total = bcmul($this->item->unit_price, strval($this->quantity), 2);
 
         // Apply each modifier to the total
         foreach ($this->modifiers as $modifier) {
             $total = $modifier->getModifiedPrice($total);
         }
 
-        return round($total, 2);
+        return $total;
     }
 
     public function getShortFormattedTotal()

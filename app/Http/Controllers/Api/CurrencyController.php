@@ -66,18 +66,15 @@ class CurrencyController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'nullable|string',
-            'symbol' => 'required|string|max:3',
+            'name' => 'sometimes|nullable|string',
+            'symbol' => 'sometimes|string|max:3',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $currency->update([
-            'name' => $request->name,
-            'symbol' => $request->symbol,
-        ]);
+        $currency->update($request->all());
 
         return response()->json([
             'message' => 'Currency updated',

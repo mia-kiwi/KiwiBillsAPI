@@ -19,7 +19,7 @@ class ItemResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'reference' => $this->reference,
-            'unit_price' => $this->unit_price,
+            'unit_price' => floatval($this->unit_price),
             'currency' => new CurrencyResource($this->currency),
             'literal_short_price' => $this->getShortFormattedPrice(),
             'literal_price' => $this->getFormattedPrice(),

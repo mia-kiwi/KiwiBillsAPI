@@ -21,13 +21,13 @@ class Currency extends Model
         'symbol',
     ];
 
-    public function getShortFormattedPrice(float $price): string
+    public function getShortFormattedPrice(string $price): string
     {
-        return $this->symbol . number_format($price, 2);
+        return $this->symbol . $price;
     }
 
-    public function getFormattedPrice(float $price): string
+    public function getFormattedPrice(string $price): string
     {
-        return number_format($price, 2) . ' ' . $this->id;
+        return $price . ' ' . $this->id;
     }
 }

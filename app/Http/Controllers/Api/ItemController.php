@@ -69,24 +69,18 @@ class ItemController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'reference' => 'nullable|string',
-            'unit_price' => 'required|decimal:0,2',
-            'currency_id' => 'required|exists:currencies,id',
+            'name' => 'sometimes|required|string',
+            'description' => 'sometimes|nullable|string',
+            'reference' => 'sometimes|nullable|string',
+            'unit_price' => 'sometimes|required|decimal:0,2',
+            'currency_id' => 'sometimes|required|exists:currencies,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $item->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'reference' => $request->reference,
-            'unit_price' => $request->unit_price,
-            'currency_id' => $request->currency_id,
-        ]);
+        $item->update($request->all());
 
         return response()->json([
             'message' => 'Item updated',

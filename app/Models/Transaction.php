@@ -25,7 +25,7 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'amount' => 'float',
+        'amount' => 'string',
     ];
 
     public function currency()

@@ -20,20 +20,20 @@ class Modifier extends Model
         'name',
         'description',
         'value',
-        'is_relative',
+        'is_multiplier',
     ];
 
     protected $casts = [
-        'is_relative' => 'boolean',
-        'value' => 'float',
+        'is_multiplier' => 'boolean',
+        'value' => 'string',
     ];
 
-    public function getModifiedPrice(float $base_price)
+    public function getModifiedPrice(string $base_price)
     {
-        if ($this->is_relative) {
-            return $base_price * $this->value;
+        if ($this->is_multiplier) {
+            return bcmul($base_price, $this->value, 2);
         }
 
-        return $base_price + $this->value;
+        return bcadd($base_price, $this->value, 2);
     }
 }

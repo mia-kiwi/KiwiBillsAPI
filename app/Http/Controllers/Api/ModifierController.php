@@ -28,7 +28,7 @@ class ModifierController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'value' => 'required|decimal:0,2',
-            'is_relative' => 'required|boolean',
+            'is_multiplier' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +40,7 @@ class ModifierController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'value' => $request->value,
-            'is_relative' => $request->is_relative,
+            'is_multiplier' => $request->is_multiplier,
         ]);
 
         return response()->json([
@@ -69,22 +69,17 @@ class ModifierController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'value' => 'required|decimal:0,2',
-            'is_relative' => 'required|boolean',
+            'name' => 'sometimes|required|string',
+            'description' => 'sometimes|nullable|string',
+            'value' => 'sometimes|required|decimal:0,2',
+            'is_multiplier' => 'sometimes|required|boolean',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $modifier->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'value' => $request->value,
-            'is_relative' => $request->is_relative,
-        ]);
+        $modifier->update($request->all());
 
         return response()->json([
             'message' => 'Modifier updated',

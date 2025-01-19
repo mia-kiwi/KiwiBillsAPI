@@ -23,7 +23,7 @@ class LineResource extends JsonResource
             'invoice_id' => $this->invoice_id,
             'item' => new ItemResource($this->item),
             'modifiers' => ModifierResource::collection($this->modifiers),
-            'line_total' => round($this->getLineTotal(), 2),
+            'line_total' => floatval($this->getLineTotal()),
             'literal_short_line_total' => $this->getShortFormattedTotal(),
             'literal_line_total' => $this->getFormattedTotal(),
             'created_at' => $this->created_at,

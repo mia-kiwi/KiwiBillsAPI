@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('value', 10, 2);
-            $table->boolean('is_relative')->default(false);
+            $table->boolean('is_multiplier')->default(false);
             $table->timestamps();
         });
     }

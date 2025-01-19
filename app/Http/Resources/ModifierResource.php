@@ -18,8 +18,8 @@ class ModifierResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'value' => $this->value,
-            'is_relative' => $this->is_relative,
+            'value' => floatval($this->value),
+            'is_multiplier' => $this->is_multiplier,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

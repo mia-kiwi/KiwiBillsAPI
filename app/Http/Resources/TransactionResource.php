@@ -17,7 +17,7 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->id,
             'description' => $this->description,
-            'amount' => $this->amount,
+            'amount' => floatval($this->amount),
             'currency' => new CurrencyResource($this->currency),
             'invoice_id' => $this->invoice_id,
             'payment_date' => $this->payment_date,

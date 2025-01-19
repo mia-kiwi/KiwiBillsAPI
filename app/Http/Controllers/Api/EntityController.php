@@ -75,28 +75,20 @@ class EntityController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'email' => 'nullable|email',
-            'website' => 'nullable|url',
-            'type' => 'nullable|string|in:individual,group',
+            'name' => 'sometimes|required|string',
+            'description' => 'sometimes|nullable|string',
+            'address' => 'sometimes|nullable|string',
+            'phone' => 'sometimes|nullable|string',
+            'email' => 'sometimes|nullable|email',
+            'website' => 'sometimes|nullable|url',
+            'type' => 'sometimes|required|string|in:individual,group',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $item->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'website' => $request->website,
-            'type' => $request->type,
-        ]);
+        $item->update($request->all());
 
         return response()->json([
             'message' => 'Entity updated',

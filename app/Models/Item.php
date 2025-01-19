@@ -25,7 +25,7 @@ class Item extends Model
     ];
 
     protected $casts = [
-        'unit_price' => 'float'
+        'unit_price' => 'string'
     ];
 
     public function currency()
@@ -35,11 +35,11 @@ class Item extends Model
 
     public function getShortFormattedPrice(): string
     {
-        return $this->currency->getShortFormattedPrice(round($this->unit_price, 2));
+        return $this->currency->getShortFormattedPrice($this->unit_price);
     }
 
     public function getFormattedPrice(): string
     {
-        return $this->currency->getFormattedPrice(round($this->unit_price, 2));
+        return $this->currency->getFormattedPrice($this->unit_price);
     }
 }

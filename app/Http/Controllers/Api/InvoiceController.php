@@ -77,32 +77,22 @@ class InvoiceController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'title' => 'nullable|string',
-            'info' => 'nullable|string',
-            'reference' => 'nullable|string',
-            'received_at' => 'nullable|date',
-            'due_at' => 'nullable|date',
-            'issued_at' => 'nullable|date',
-            'issued_by' => 'required|string|exists:entities,id',
-            'payable_to' => 'required|string|exists:entities,id',
-            'payable_by' => 'required|string|exists:entities,id',
+            'title' => 'sometimes|nullable|string',
+            'info' => 'sometimes|nullable|string',
+            'reference' => 'sometimes|nullable|string',
+            'received_at' => 'sometimes|nullable|date',
+            'due_at' => 'sometimes|nullable|date',
+            'issued_at' => 'sometimes|nullable|date',
+            'issued_by' => 'sometimes|required|string|exists:entities,id',
+            'payable_to' => 'sometimes|required|string|exists:entities,id',
+            'payable_by' => 'sometimes|required|string|exists:entities,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $invoice->update([
-            'title' => $request->title,
-            'info' => $request->info,
-            'reference' => $request->reference,
-            'received_at' => $request->received_at,
-            'due_at' => $request->due_at,
-            'issued_at' => $request->issued_at,
-            'issued_by' => $request->issued_by,
-            'payable_to' => $request->payable_to,
-            'payable_by' => $request->payable_by,
-        ]);
+        $invoice->update($request->all());
 
         return response()->json([
             'message' => 'Invoice updated',

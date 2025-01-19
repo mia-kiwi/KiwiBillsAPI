@@ -63,10 +63,10 @@ class Invoice extends Model
     public function getTotal()
     {
         // Sum up the total of all lines
-        $total = 0;
+        $total = "0";
 
         foreach ($this->lines as $line) {
-            $total += $line->getLineTotal();
+            $total = bcadd($total, $line->getLineTotal(), 2);
         }
 
         return $total;
@@ -91,16 +91,16 @@ class Invoice extends Model
 
     function getOwed()
     {
-        return $this->getTotal() - $this->getPaid();
+        return bcsub($this->getTotal(), $this->getPaid(), 2);
     }
 
     function getPaid()
     {
         // Sum up the total of all payments
-        $total = 0;
+        $total = "0";
 
         foreach ($this->transactions as $transaction) {
-            $total += $transaction->amount;
+            $total = bcadd($total, $transaction->amount, 2);
         }
 
         return $total;
@@ -108,12 +108,16 @@ class Invoice extends Model
 
     function getStatus()
     {
-        if ($this->getOwed() === 0) {
-            return 'paid';
-        } else if ($this->getOwed() === $this->getTotal()) {
-            return 'unpaid';
-        } else {
-            return 'partially paid';
+        $total = $this->getTotal();
+        $paid = $this->getPaid();
+
+        switch (bccomp($total, $paid, 2)) {
+            case 0:
+                return 'paid';
+            case 1:
+                return 'unpaid';
+            case -1:
+                return 'overpaid';
         }
     }
 }

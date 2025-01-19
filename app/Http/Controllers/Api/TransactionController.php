@@ -69,24 +69,18 @@ class TransactionController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'description' => 'nullable|string',
-            'amount' => 'required|decimal:0,2',
-            'currency_id' => 'required|exists:currencies,id',
-            'invoice_id' => 'required|exists:invoices,id',
-            'payment_date' => 'nullable|date',
+            'description' => 'sometimes|nullable|string',
+            'amount' => 'sometimes|required|decimal:0,2',
+            'currency_id' => 'sometimes|required|exists:currencies,id',
+            'invoice_id' => 'sometimes|required|exists:invoices,id',
+            'payment_date' => 'sometimes|nullable|date',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $transaction->update([
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'currency_id' => $request->currency_id,
-            'invoice_id' => $request->invoice_id,
-            'payment_date' => $request->payment_date ?? now(),
-        ]);
+        $transaction->update($request->all());
 
         return response()->json([
             'message' => 'Transaction updated',
