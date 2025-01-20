@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -12,10 +15,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->uuid('id')->primary();
+            $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->text('abilities')->default('[]');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
@@ -29,12 +32,22 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignUuid('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        DB::table('users')->insert([
+            'id' => Str::uuid(),
+            'name' => env('ADMIN_NAME'),
+            'email' => env('ADMIN_MAIL'),
+            'password' => Hash::make(env('ADMIN_DEFAULT_PASSWORD')),
+            'abilities' => '["*"]',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
